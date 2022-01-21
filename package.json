@@ -1,0 +1,20 @@
+{
+  "name": "sql-mq",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./build/index.js",
+  "types": "./build/index.d.js",
+  "scripts": {
+    "format": "prettier --print-width 100 --no-semi false --single-quote true --write \"./**/*.ts\"",
+    "compile": "tsc",
+    "build": "npm run format && npm run compile",
+    "test": "npm run build && cd tests && npm i && sh kick_off.sh"
+  },
+  "author": "John Egan",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/pg": "8.6.4",
+    "prettier": "1.19.1",
+    "typescript": "^4.1.3"
+  }
+}

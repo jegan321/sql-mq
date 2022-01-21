@@ -1,0 +1,14 @@
+export declare const SCHEMA = "sql_mq";
+export declare const MESSAGES_TABLE: string;
+export declare const BEGIN_SQL = "begin";
+export declare const COMMIT_SQL = "commit";
+export declare const DROP_SCHEMA_SQL: string;
+export declare const CREATE_SCHEMA_SQL: string;
+export declare const CREATE_MESSAGES_TABLE_SQL: string;
+export declare const GET_MESSAGES_SQL: string;
+export declare const DELETE_MESSAGE_SQL: string;
+export declare const LIST_QUEUES_SQL: string;
+export declare const PURGE_QUEUE_SQL: string;
+export declare const PURGE_ALL_QUEUES_SQL: string;
+export declare const MESSAGES_VIEW: string;
+export declare const QUEUES_VIEW: string;
