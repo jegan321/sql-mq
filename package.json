@@ -25,5 +25,5 @@
     "messaging",
     "queue",
     "postgres"
-  ],
+  ]
 }
