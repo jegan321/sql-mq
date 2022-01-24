@@ -111,7 +111,7 @@ await client.send('my-queue', 'Message 2', {
     priority: 1
 })
 
-// Returns Message 2 even though it was second after Message 1
+// Returns Message 2 even though it was sent after Message 1
 const message = await client.get('my-queue')
 ```
 
