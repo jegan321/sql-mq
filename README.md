@@ -1,4 +1,4 @@
-# SQL MQ for Node.js
+# SQL Message Queue for Node.js
 
 Message queueing with the database you're already using.
 
@@ -14,7 +14,7 @@ Message queueing with the database you're already using.
 npm install sql-mq
 ```
 
-# Full Example
+## Full Example
 ```js
 const { Pool } = require('pg')
 const { createClient, createWorker } = require('sql-mq')
@@ -28,21 +28,23 @@ const client = createClient({
 })
 
 // Set up the database to store messages
-client.bootstrapDatabase()
+client.bootstrapDatabase().then(( => {
 
-// Send messages to the queue
-client.send(queueName, 'Message 1')
-client.send(queueName, 'Message 2')
-client.send(queueName, 'Message 3')
+    // Send messages to the queue
+    client.send(queueName, 'Message 1')
+    client.send(queueName, 'Message 2')
+    client.send(queueName, 'Message 3')
 
-// Poll for messages and process them
-createWorker({
-    client: client,
-    queueName: queueName,
-    callback: m => {
-        console.log(`Received message with id: ${m.id} and body: ${m.body}`)
-    }
-}).start()
+    // Poll for messages and process them
+    createWorker({
+        client: client,
+        queueName: queueName,
+        callback: m => {
+            console.log(`Received message with id: ${m.id} and body: ${m.body}`)
+        }
+    }).start()
+
+}))
 ```
 
 # Docs
@@ -69,16 +71,16 @@ client.send('my-queue', {
 Once a message is received it will be marked invisible so other consumers can't get the same one. If there are no messages in the queue or they are all invisible then this will return null.
 ```js
 // Get a message from the queue
-const message = client.get('my-queue')
+const message = await client.get('my-queue')
 
 // You can also get multiple messages at once using the getBatch method
-const messages = client.getBatch('my-queue')
+const messages = await client.getBatch('my-queue')
 ```
 
 ## Deleting messages
 After you are finished processing a message you must delete it from the queue. If the message is not deleted it will automatically become visible again after the visibility timeout
 ```js
-const message = client.get('my-queue')
+const message = await client.get('my-queue')
 
 // Do something with the here message...
 
@@ -97,6 +99,33 @@ const worker = createWorker({
     callback: callback
 })
 worker.start()
+```
+
+## Prioritizing Messages
+By default messages are delivered first in, first out (FIFO). You can also provide a priority value when sending a message. This allows older messages to jump ahead in the queue or low priority messages to not block more urgent ones.
+```js
+await client.send('my-queue', 'Message 1', {
+    priority: 0
+})
+await client.send('my-queue', 'Message 2', {
+    priority: 1
+})
+
+// Returns Message 2 even though it was second after Message 1
+const message = await client.get('my-queue')
+```
+
+## Expiring Messages
+Messages will be visible in the queue until:
+1. They retention period has elapsed
+2. The number of attempts exceeds the maximum number of attempts
+
+You can override the default retention period and max attempts when sending a message.
+```js
+client.send('my-queue', 'Message 1', {
+    retentionPeriod: 60 * 60 * 5, // 5 hours
+    maxAttempts: 10
+})
 ```
 
 ## License
