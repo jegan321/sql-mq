@@ -117,7 +117,7 @@ const message = await client.get('my-queue')
 
 ## Expiring Messages
 Messages will be visible in the queue until:
-1. They retention period has elapsed
+1. The retention period has elapsed
 2. The number of attempts exceeds the maximum number of attempts
 
 You can override the default retention period and max attempts when sending a message.

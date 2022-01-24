@@ -1,6 +1,6 @@
 {
   "name": "sql-mq",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "type": "module",
   "main": "./build/index.js",
   "types": "./build/index.d.js",
