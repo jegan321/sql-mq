@@ -74,7 +74,7 @@ Once a message is received it will be marked invisible so other consumers can't 
 const message = await client.get('my-queue')
 
 // You can also get multiple messages at once using the getBatch method
-const messages = await client.getBatch('my-queue')
+const messages = await client.getBatch('my-queue', 10)
 ```
 
 ## Deleting messages
@@ -82,7 +82,7 @@ After you are finished processing a message you must delete it from the queue. I
 ```js
 const message = await client.get('my-queue')
 
-// Do something with the here message...
+// Do something with the message here...
 
 client.delete(message.id)
 ```
