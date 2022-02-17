@@ -72,9 +72,11 @@ Once a message is received it will be marked invisible so other consumers can't 
 ```js
 // Get a message from the queue
 const message = await client.get('my-queue')
+console.log(message.body)
 
 // You can also get multiple messages at once using the getBatch method
 const messages = await client.getBatch('my-queue', 10)
+messages.forEach(message => console.log(message.body))
 ```
 
 ## Deleting messages
