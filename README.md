@@ -28,7 +28,7 @@ const client = createClient({
 })
 
 // Set up the database to store messages
-client.bootstrapDatabase().then(( => {
+client.bootstrapDatabase().then(() => {
 
     // Send messages to the queue
     client.send(queueName, 'Message 1')
